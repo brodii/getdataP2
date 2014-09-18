@@ -1,0 +1,51 @@
+CODEBOOK for the Get Data project.
+corresponding to the runanalysis.R script and the readme file in this same directory
+This codebook will describe the variables used in the R script named above as well as the transfermation methods.
+
+Raw Data:
+Obtained from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+Contains observations on hundreds of variables for multiple subjects across 6 activities for data collected from Samsung 
+smartphones.
+
+The data was normalized across multiple files which described:
+The subjects: this was split between the Test and Train user groups, subjects_test.txt and subjects_train.txt
+The activities: this was also split between the Test and Train user groups, y_test.txt and y_train.txt.  However
+the afore mentioned files only contained identifiers (1-6) which linked to a master file describing the activities, 
+activity_labels.txt
+
+For both Test and Train there was a third file containing the observations:
+X_test.txt and X_train.txt
+
+All test specific files are contained in the following directory:
+getdata-projectfiles-UCI HAR Dataset\UCI HAR Dataset\test
+
+All train specific files are contained in the following directory:
+getdata-projectfiles-UCI HAR Dataset\UCI HAR Dataset\train
+
+Files describing labels such as activities are contained in a parent directory:
+getdata-projectfiles-UCI HAR Dataset\UCI HAR Dataset\
+
+
+Getting and Transforming data:
+1. Data from both Test and Train datasets are read in and combined with 
+  a. Subjects
+  b. Activities
+2. Activity labels were replaced with their descriters
+3. Column names were added to the combined data set.  For the variables, these names were pulled from the features.txt file
+for both test and train.
+
+4. Once the data is read in, the script eliminates columns that do not contain "mean" or "std" in their names.
+this leaves a data frame with 88 columns (Subject, Activity, and 86 columns of variables)
+
+5. The combined, cleaned, and subsetted data set is then passed to a function to calculate the Mean on each set of rows for
+each subject and activity.  In other words, if there are multiple observations for Subject 1 for the activity of Walking, 
+those observations are reduced to a single mean of those values.  Creating a data frame of 180 rows and 88 columns.
+
+
+Columns (variables)
+1. Subject - an numeric identifier of the person in the study that the results were obtained from
+2. Activity - a descriptive identifier of what the subject was doing when the observation was recorded, i.e. Walking, Standing
+3-88. the remaining variables are collected from the smartphone and are described in the files:
+feature.txt and features_info.txt in the getdata-projectfiles-UCI HAR Dataset\UCI HAR Dataset\ directory.  
+They contain calculations of Mean and Standard Deviations for various elements collected from the smartphone 
+during the study.
